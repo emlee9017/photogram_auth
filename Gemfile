@@ -1,5 +1,10 @@
 source 'http://rubygems.org'
 
+#Add starter_generator
+gem 'starter_generators', :git => "http://github.com/rbetina/starter_generators.git"
+
+#Add the Devise gem
+gem 'devise'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'

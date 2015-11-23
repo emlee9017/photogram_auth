@@ -1,0 +1,22 @@
+<div class="page-header">
+  <h1>
+    My Likes
+  </h1>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+      <dt>Photos</dt>
+      <dd>
+        <ul class="list-group">
+          <% @photos.each do |photo| %>
+          <p><%= photo.caption %></p>
+          <p><image src=<%= photo.image %> width=100 height="auto"></p>
+          <% end %>
+        </ul>
+      </dd>      
+    </dl>    
+  </div>
+</div>
