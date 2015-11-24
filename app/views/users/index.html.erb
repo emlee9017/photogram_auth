@@ -1,31 +1,19 @@
-<div class="page-header">
-  <h1>
-    Users
-  </h1>
-</div>
-
+<div class="container">
 <div class="row">
-  <div class="col-md-12">
-    <table class="table table-striped table-hover">
-      <tr>
-        <th>User ID</th>
-        <th>User Name</th>
-        <th>Email</th>
-        <th>Created At</th>
-        <th>Sign In Count</th>
-        <th></th>
-      </tr>
-
+  <div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">All Users</h3>
+      </div>
+      <ul class="list-group">
       <% @users.each do |user| %>
-      <tr>
-        <td><%= user.id %></td>
-        <td><%= user.username %></td>
-        <td><%= user.email %></td>
-        <td><%= user.created_at %></td>
-        <td><%= user.sign_in_count %></td>          
-        <td><a href="/users/<%= user.id %>" class="btn btn-primary">Show</a></td>
-      </tr>
+      <li class="list-group-item">
+        <a href="/users/<%= user.id %>"><%= user.username %></a>
+      </li>
       <% end %>
-    </table>
+      </ul>
+    </div>
   </div>
 </div>
+</div> 
+
