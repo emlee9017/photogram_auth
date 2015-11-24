@@ -22,7 +22,8 @@
             <p>
               <i class="fa fa-heart"></i>
               <%= photo.fans.pluck(:username).to_sentence %>
-              <% if photo.likes.pluck(:user_id).to_sentence.length == 1 %>
+              <% if photo.likes.pluck(:user_id).to_sentence.length == 0 %>
+              <% elsif photo.likes.pluck(:user_id).to_sentence.length == 1 %>
               likes this
               <% else %>
               like this
