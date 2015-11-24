@@ -26,7 +26,7 @@ class PhotosController < ApplicationController
     @photo = Photo.new
     @photo.caption = params[:caption]
     @photo.image = params[:image]
-    @photo.user_id = params[:user_id]
+    @photo.user_id = params[current_user]
 
     if @photo.save
       redirect_to "/photos", :notice => "Photo created successfully."

@@ -39,9 +39,10 @@
             </p>
             <% photo.comments.each do |comment| %>
             <a ref="/users/<%= comment.user_id %>"> <%= User.find(comment.user_id).username %> </a>
-            <small> about <%= time_ago_in_words(comment.created_at) %> ago </small>
+            <small> <%= time_ago_in_words(comment.created_at) %> ago </small>
             <p><%= comment.body %></p>
-            <% end %>            
+            <% end %>  
+            <input type="text" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= current_user.email %>">          
         </div>
       </div>
     </div>
