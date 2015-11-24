@@ -12,15 +12,35 @@
         <div class="panel-body">
           <a href="/photos/<%= photo.id %>">
             <img src="<%= photo.image %>" class="img-responsive"></a>
-            <p>
-              <i class="fa fa-heart"></i>
+            
+          <p>
+            <%if (photo.likes.pluck(:user_id).exclude? current_user.id) or (photo.likes.pluck(:user_id).length == 0) %>
+              <form action="/create_like" method="post">
+                <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                <input type="hidden" name="photo_id" value="<%= photo.id %>">
+                <input type="hidden" name="user_id" value="<%= current_user.id %>">
+                <button class="btn btn-link">
+                  <i class="fa fa-heart-o"></i>
+                </button>
+            <% else %>  
+              <a href="/delete_like/<%= photo.likes.find_by_user_id(current_user.id).id %>" class="btn btn-link">
+              <i class="fa fa-heart"></i></a>
+            <% end %>
+
+            <%if photo.likes.pluck(:user_id).length == 0%>
+              <small class="text-muted">be the first to like this</small>
+            <% else %>
               <%= photo.fans.pluck(:username).to_sentence %>
-              <% if photo.likes.pluck(:user_id).to_sentence.length == 1 %>
-              likes this
+              <% if photo.likes.pluck(:user_id).to_sentence.length == 0 %>
+              <% elsif photo.likes.pluck(:user_id).to_sentence.length == 1 %>
+                likes this
               <% else %>
-              like this
+                like this
               <% end %>
-            </p>
+            <% end %>
+            </form>
+          </p>
+            
             <% photo.comments.each do |comment| %>
             <a ref="/users/<%= comment.user_id %>"> <%= User.find(comment.user_id).username %> </a>
             <small> <%= time_ago_in_words(comment.created_at) %> ago </small>
