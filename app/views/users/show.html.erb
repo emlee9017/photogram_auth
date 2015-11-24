@@ -1,34 +1,50 @@
-<div class="page-header">
-  <h3><%= @user.username %></h3>
-</div>
-
-<div class="row">
-  <div class="col-md-12">
-    <dl class="dl-horizontal">
-      <dt>ID #</dt>
-      <dd><%= @user.id %></dd>
-
-      <dt>User Name</dt>
-      <dd><%= @user.username %></dd>
-
-      <dt>Email Address</dt>
-      <dd><%= @user.email %></dd>
-
-      <dt>Account Created At</dt>
-      <dd><%= @user.created_at %></dd>
-
-      <dt>Photos</dt>
-      <dd>
-        <ul class="list-group">
-          <% @photos.each do |photo| %>
-          <p><%= photo.caption %></p>
-          <p><image src=<%= photo.image %> width=100 height="auto"></p>
-          <% end %>
-        </ul>
-      </dd>   
-
-
-    </dl>
-
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="jumbotron">
+        <h3><%= @user.username %></h3>
+      </div>
+    </div>
   </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <a href="/photos/new" class="btn btn-default btn-block">
+        <i class="fa fa-plus"></i>
+      </a>
+    </div>
+  </div>
+  <hr>
+
+  <% @photos.each do |photo| %>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <a ref="/users/<%= photo.user_id %>"> <%= User.find(photo.user_id).username %> </a>
+            <small> about <%= time_ago_in_words(photo.created_at) %> ago </small>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <a href="/photos/<%= photo.id %>">
+            <img src="<%= photo.image %>" class="img-responsive"></a>
+            <p>
+              <i class="fa fa-heart"></i>
+              <%= photo.fans.pluck(:username).to_sentence %>
+              <% if photo.likes.pluck(:user_id).to_sentence.length == 1 %>
+              likes this
+              <% else %>
+              like this
+              <% end %>
+            </p>
+            <% photo.comments.each do |comment| %>
+            <a ref="/users/<%= comment.user_id %>"> <%= User.find(comment.user_id).username %> </a>
+            <small> about <%= time_ago_in_words(comment.created_at) %> ago </small>
+            <p><%= comment.body %></p>
+            <% end %>            
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
 </div>
